@@ -1,4 +1,6 @@
 {
+  "short_name": "dnd-character-sheets",
+  "name": "dnd-character-sheets",
   "icons": [
     {
       "src": "favicon.ico",
