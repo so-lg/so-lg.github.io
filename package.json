@@ -1,8 +1,8 @@
 {
   "name": "dnd-character-sheets",
   "version": "0.1.0",
-  "private": true,
-  "homepage": "https://uinderal.com/stats",
+  "private": false,
+  "homepage": "uinderal.com",
   "dependencies": {
     "-": "^0.0.1",
     "@testing-library/jest-dom": "^5.16.4",
