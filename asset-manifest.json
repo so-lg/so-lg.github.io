@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.css": "/stats/static/css/main.6435e21f.css",
-    "main.js": "/stats/static/js/main.eb6629c2.js",
-    "index.html": "/stats/index.html",
-    "main.6435e21f.css.map": "/stats/static/css/main.6435e21f.css.map",
-    "main.eb6629c2.js.map": "/stats/static/js/main.eb6629c2.js.map"
+    "main.css": "/uinderal.com/static/css/main.6435e21f.css",
+    "main.js": "/uinderal.com/static/js/main.eb6629c2.js",
+    "index.html": "/uinderal.com/index.html",
+    "main.6435e21f.css.map": "/uinderal.com/static/css/main.6435e21f.css.map",
+    "main.eb6629c2.js.map": "/uinderal.com/static/js/main.eb6629c2.js.map"
   },
   "entrypoints": [
     "static/css/main.6435e21f.css",
