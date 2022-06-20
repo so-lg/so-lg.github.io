@@ -2,7 +2,7 @@
   "name": "dnd-character-sheets",
   "version": "1.0.0",
   "private": true,
-  "homepage": "https://uinderal.com",
+  "homepage": "https://uinderal.com/",
   "dependencies": {
     "-": "^0.0.1",
     "@testing-library/jest-dom": "^5.16.4",
