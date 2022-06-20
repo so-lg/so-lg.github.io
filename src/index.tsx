@@ -7,4 +7,4 @@ import App from './App'
 import 'bootstrap/dist/css/bootstrap.css'
 import { BrowserRouter as Router} from 'react-router-dom';
 
-ReactDOM.render(<Router basename={'calvery.ca/divisions/universeOfUinderal/dnd-character-sheets'}><App /></Router>, document.getElementById('root'))
+ReactDOM.render(<Router basename={'uinderal.com'}><App /></Router>, document.getElementById('root'))
