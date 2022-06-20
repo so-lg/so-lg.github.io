@@ -7,4 +7,4 @@ import App from './App'
 import 'bootstrap/dist/css/bootstrap.css'
 import { BrowserRouter as Router} from 'react-router-dom';
 
-ReactDOM.render(<Router basename={'uinderal.com'}><App /></Router>, document.getElementById('root'))
+ReactDOM.render(<Router basename={'/'}><App /></Router>, document.getElementById('root'))
