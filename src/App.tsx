@@ -9,9 +9,17 @@ import {
 } from 'react-router-dom'
 import axios from 'axios'
 import qs from 'qs'
-
+import { DBConfig } from './DBConfig';
+import { initDB } from 'react-indexed-db';
+import { IndexedDB } from 'react-indexed-db';
+import { useIndexedDB } from 'react-indexed-db';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { solid, regular, brands } from '@fortawesome/fontawesome-svg-core/import.macro'
+ 
 import { DnDCharacterStatsSheet, DnDCharacterProfileSheet, DnDCharacterSpellSheet, DnDCharacter } from 'dnd-character-sheets'
 import 'dnd-character-sheets/dist/index.css'
+
+
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -23,7 +31,63 @@ function ScrollToTop() {
   return null;
 }
 
-const App = (props: any) => {
+
+initDB(DBConfig);
+
+
+export function PanelExample() {
+  const db = useIndexedDB('Character');
+
+  return (<div>{JSON.stringify(db)}</div>);
+}
+
+ 
+function AddMore() {
+  const { add } = useIndexedDB('Character');
+  const [person, setPerson] = useState();
+ 
+  const handleClick = () => {
+    add({ name: 'test',
+          classLevel: 'ddwadwa',
+          background:"acolite",
+          faction:"good guys", 
+          race:"human",
+          alignment:"neutral",
+          xp:"10",
+          dciNo:"1",
+          str:"10",
+          dex:"10",
+          con:"10",
+          int:"10",
+          wis:"10",
+          cha:"10"
+          } 
+          ).then(
+      event => {
+        console.log('ID Generated: Added Character');
+      },
+      error => {
+        console.log(error);
+      }
+    );
+  };
+ 
+  return <button onClick={handleClick}>Add</button>;
+}
+
+function GetCharacter(){
+  
+    const { getByID } = useIndexedDB('Character');
+    const [person, setPerson] = useState();
+    var data = {};
+   
+    return  getByID(1) ;
+  
+}
+
+
+const App: React.FC = (props: any) => {
+  const { getByID } = useIndexedDB('Character');
   const [character, setCharacter] = useState<DnDCharacter>(loadDefaultCharacter())
   const [navTop, setNavTop] = useState<number>(0)
   const [prevScrollpos, setPrevScrollpos] = useState<number>(window.pageYOffset)
@@ -31,17 +95,17 @@ const App = (props: any) => {
 
   const { search } = useLocation();
   useEffect(() => {
-    const characterToLoad = qs.parse(search, { ignoreQueryPrefix: true }).character
+    const characterToLoad = true
     if (characterToLoad) {
       setLoading(true)
-      axios
-        .get('characters/' + characterToLoad + '.json')
+
+        getByID(1)
         .then((response: any) => {
           setLoading(false)
           try {
-            if (!Array.isArray(response.data) && typeof response.data === 'object') {
+            if (!Array.isArray(response) && typeof response === 'object') {
               console.log('Loaded Character - ' + characterToLoad)
-              updateCharacter(response.data)
+              updateCharacter(response)
             } else {
               throw new Error('Json file does not contain a DnD character.')
             }
@@ -70,6 +134,7 @@ const App = (props: any) => {
       onCharacterChanged={updateCharacter}
     />
   )
+
   const spellSheet = (
     <DnDCharacterSpellSheet
       character={character}
@@ -157,7 +222,9 @@ const App = (props: any) => {
   }
 
   return (
+    
     <div>
+    
       <nav className='navbar navbar-expand-lg navbar-dark fixed-top' style={{ backgroundColor: 'rgb(204, 10, 33)', top: navTop === 0 ? '' : navTop + 'px' }}>
           <button className='navbar-toggler' type='button' data-toggle='collapse' data-target='#navbarSupportedContent' aria-controls='navbarSupportedContent' aria-expanded='false' aria-label='Toggle navigation'>
               <span className='navbar-toggler-icon'></span>
@@ -186,13 +253,13 @@ const App = (props: any) => {
                         <button className='btn btn-dark' onClick={() => document.getElementById("selectFiles")?.click()}>Import</button>
                         <button className='btn btn-dark' onClick={() => window.print()}>Print</button>
                         <button className='btn btn-danger' onClick={() => clearCharacter()}>Clear</button>
+                        <button className='btn btn-success' onClick={() => AddMore()}><FontAwesomeIcon icon={solid('user-secret')} />Save</button>
                     </li>
                 </ul>
             </div>
           </div>
       </nav>
       <div className='app-holder'>
-
         <Switch>
           <Route exact path='/'>
             <ScrollToTop />
