@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react';
 import {
   Switch,
   Route,
@@ -6,18 +6,13 @@ import {
   withRouter,
   Redirect,
   useLocation
-} from 'react-router-dom'
-import axios from 'axios'
-import qs from 'qs'
+} from 'react-router-dom';
+import axios from 'axios';
+import qs from 'qs';
 import { DBConfig } from './DBConfig';
-import { initDB } from 'react-indexed-db';
-import { IndexedDB } from 'react-indexed-db';
-import { useIndexedDB } from 'react-indexed-db';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { solid, regular, brands } from '@fortawesome/fontawesome-svg-core/import.macro'
- 
-import { DnDCharacterStatsSheet, DnDCharacterProfileSheet, DnDCharacterSpellSheet, DnDCharacter } from 'dnd-character-sheets'
-import 'dnd-character-sheets/dist/index.css'
+import { initDB, useIndexedDB } from 'react-indexed-db';
+import { DnDCharacterStatsSheet, DnDCharacterProfileSheet, DnDCharacterSpellSheet, DnDCharacter } from 'dnd-character-sheets';
+import 'dnd-character-sheets/dist/index.css';
 
 
 
@@ -40,51 +35,6 @@ export function PanelExample() {
 
   return (<div>{JSON.stringify(db)}</div>);
 }
-
- 
-function AddMore() {
-  const { add } = useIndexedDB('Character');
-  const [person, setPerson] = useState();
- 
-  const handleClick = () => {
-    add({ name: 'test',
-          classLevel: 'ddwadwa',
-          background:"acolite",
-          faction:"good guys", 
-          race:"human",
-          alignment:"neutral",
-          xp:"10",
-          dciNo:"1",
-          str:"10",
-          dex:"10",
-          con:"10",
-          int:"10",
-          wis:"10",
-          cha:"10"
-          } 
-          ).then(
-      event => {
-        console.log('ID Generated: Added Character');
-      },
-      error => {
-        console.log(error);
-      }
-    );
-  };
- 
-  return <button onClick={handleClick}>Add</button>;
-}
-
-function GetCharacter(){
-  
-    const { getByID } = useIndexedDB('Character');
-    const [person, setPerson] = useState();
-    var data = {};
-   
-    return  getByID(1) ;
-  
-}
-
 
 const App: React.FC = (props: any) => {
   const { getByID } = useIndexedDB('Character');
@@ -212,6 +162,32 @@ const App: React.FC = (props: any) => {
     updateCharacter({ })
   }
 
+  //Functions dedicated to save and load character sheets from our DB. 
+  function SaveCharacterSheet() {
+    const { add } = useIndexedDB('Character');
+    const [person, setPerson] = useState();
+    const json = JSON.stringify(character, null, 2);
+    const handleClick = () => {
+      add({ json
+            } 
+            ).then(
+        event => {
+          console.log('ID Generated: Added Character');
+        },
+        error => {
+          console.log(error);
+        }
+      );
+    };
+    return <button onClick={handleClick}>Save</button>;
+  }
+  function LoadCharacterSheet(){
+    const { getByID } = useIndexedDB('Character');
+    const [person, setPerson] = useState();
+    var data = {};
+    return  getByID(1) ;
+  }
+  //Default redirect
   function getDefaultRedirect(search: string | undefined) {
     let defaultRedirect = '/stats' + search
     if (window.innerWidth < 992) { 
@@ -220,11 +196,8 @@ const App: React.FC = (props: any) => {
     }
     return defaultRedirect
   }
-
-  return (
-    
+  return ( 
     <div>
-    
       <nav className='navbar navbar-expand-lg navbar-dark fixed-top' style={{ backgroundColor: 'rgb(204, 10, 33)', top: navTop === 0 ? '' : navTop + 'px' }}>
           <button className='navbar-toggler' type='button' data-toggle='collapse' data-target='#navbarSupportedContent' aria-controls='navbarSupportedContent' aria-expanded='false' aria-label='Toggle navigation'>
               <span className='navbar-toggler-icon'></span>
@@ -253,7 +226,8 @@ const App: React.FC = (props: any) => {
                         <button className='btn btn-dark' onClick={() => document.getElementById("selectFiles")?.click()}>Import</button>
                         <button className='btn btn-dark' onClick={() => window.print()}>Print</button>
                         <button className='btn btn-danger' onClick={() => clearCharacter()}>Clear</button>
-                        <button className='btn btn-success' onClick={() => AddMore()}><FontAwesomeIcon icon={solid('user-secret')} />Save</button>
+                        <button className='btn btn-success' onClick={() => SaveCharacterSheet()}>Save</button>
+                        <button className='btn btn-success' onClick={() => LoadCharacterSheet()}>Load</button>
                     </li>
                 </ul>
             </div>
