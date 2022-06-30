@@ -1,14 +1,16 @@
 export const DBConfig = {
     name: 'CharacterDB',
-    version: 1,
+    version: 1.1,
     objectStoresMeta: [
         {
             store: 'Character',
-            storeConfig: { keyPath: 'id', autoIncrement: true },
+            storeConfig: { name:'id', keyPath: 'id', autoIncrement: true },
             storeSchema: [
+                { name: 'sheetKey', keypath: 'sheetKey', options: { unique: true } },
                 { name: 'name', keypath: 'name', options: { unique: false } },
                 { name: 'classLevel', keypath: 'classLevel', options: { unique: false } },
                 { name: 'background', keypath: 'background', options: { unique: false } },
+                { name: 'playerName', keypath: 'playerName', options: { unique: false } },
                 { name: 'faction', keypath: 'faction', options: { unique: false } },
                 { name: 'race', keypath: 'race', options: { unique: false } },
                 { name: 'alignment', keypath: 'alignment', options: { unique: false } },
@@ -144,8 +146,7 @@ export const DBConfig = {
                 { name: 'lvl8Spells', keypath: 'lvl8Spells', options: { unique: false } },
                 { name: 'lvl9SpellSlotsTotal', keypath: 'lvl9SpellSlotsTotal', options: { unique: false } },
                 { name: 'lvl9SpellSlotsUsed', keypath: 'lvl9SpellSlotsUsed', options: { unique: false } },
-                { name: 'lvl9Spells', keypath: 'lvl9Spells', options: { unique: false } },
-
+                { name: 'lvl9Spells', keypath: 'lvl9Spells', options: { unique: false } }
             ]
         }
     ]
