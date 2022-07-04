@@ -1,12 +1,12 @@
 export const DBConfig = {
-    name: 'CharacterDB',
+    name: 'UinderalDB',
     version: 1.1,
     objectStoresMeta: [
         {
-            store: 'Character',
+            store: 'CharacterSheets',
             storeConfig: { name:'id', keyPath: 'id', autoIncrement: true },
             storeSchema: [
-                { name: 'sheetKey', keypath: 'sheetKey', options: { unique: true } },
+                { name: 'password', keypath: 'password', options: { unique: false } },
                 { name: 'name', keypath: 'name', options: { unique: false } },
                 { name: 'classLevel', keypath: 'classLevel', options: { unique: false } },
                 { name: 'background', keypath: 'background', options: { unique: false } },
