@@ -16,6 +16,7 @@ import { DnDCharacterStatsSheet, DnDCharacterProfileSheet, DnDCharacterSpellShee
 import 'dnd-character-sheets/dist/index.css';
 import { resolve } from 'node:path/win32';
 import { render } from 'react-dom';
+import { clear } from 'console';
 interface InputWrapperProps {
   children?: React.ReactNode
 }
@@ -37,7 +38,6 @@ return (<div>{JSON.stringify(db)}</div>);
 
 const App: React.FC = (props: any) => {
 const { getByID } = useIndexedDB('CharacterSheets');
-const { getAll } = useIndexedDB('CharacterSheets');
 const [character, setCharacter] = useState<DnDCharacter>(loadDefaultCharacter())
 const [navTop, setNavTop] = useState<number>(0)
 const [prevScrollpos, setPrevScrollpos] = useState<number>(window.pageYOffset)
@@ -45,33 +45,33 @@ const [, setLoading] = useState<boolean>(false)
 const { search } = useLocation();
 const [sheetList, setSheetList] = useState<any>();
 const [selectedSheet, setSelectedSheet] = useState<any>();
-useEffect(() => {
-const characterToLoad = true
-if (characterToLoad) {
-setLoading(true)
-getByID(1)
-.then((response: any) => {
-  setLoading(false)
-  try {
-    if (!Array.isArray(response) && typeof response === 'object') {
-      console.log('Loaded Character - ' + characterToLoad)
-      updateCharacter(response)
-    } else {
-      throw new Error('Json file does not contain a DnD character.')
-    }
+/*useEffect(() => {
+  const characterToLoad = true
+  if (characterToLoad) {
+    setLoading(true)
+    getByID(1)
+    .then((response: any) => {
+      setLoading(false)
+      try {
+        if (!Array.isArray(response) && typeof response === 'object') {
+          console.log('Loaded Character - ' + characterToLoad)
+          updateCharacter(response)
+        } else {
+          throw new Error('Json file does not contain a DnD character.')
+        }
+      }
+      catch {
+        throw new Error('Json file does not contain a DnD character.')
+      }
+    })
+    .catch((error: any) => {
+      console.log('Failed to load Character - ' + characterToLoad)
+      console.log(error)
+      setLoading(false)
+    })
   }
-  catch {
-    throw new Error('Json file does not contain a DnD character.')
-  }
-})
-.catch((error: any) => {
-  console.log('Failed to load Character - ' + characterToLoad)
-  console.log(error)
-  setLoading(false)
-})
-}
 }, [search]);
-
+*/
 const statsSheet = (
 <DnDCharacterStatsSheet
 character={character}
@@ -130,35 +130,33 @@ a.click();
 
 
 function importCharacter (event: any) {
-if (event.target.files.length > 0){
-var fr = new FileReader();
+  if (event.target.files.length > 0){
+  var fr = new FileReader();
 
-fr.onload = function(e) { 
-if (e.target && e.target.result && typeof e.target.result === 'string') {
-  loadCharacter(e.target.result)
-}
-}
-
-fr.readAsText(event.target.files[0]);
-}
+  fr.onload = function(e) { 
+    if (e.target && e.target.result && typeof e.target.result === 'string') {
+      loadCharacter(e.target.result)
+    }
+  }
+  fr.readAsText(event.target.files[0]);
+  }
 }
 
 function loadCharacter(json: string) {
-try {
-var result = JSON.parse(typeof json === 'string' ? json : '{}');
-if (!Array.isArray(result) && typeof result === 'object') {
-updateCharacter(result)
-} else {
-window.alert('Json file does not contain a DnD character.')
+  try {
+    var result = JSON.parse(typeof json === 'string' ? json : '{}');
+    if (!Array.isArray(result) && typeof result === 'object') {
+      updateCharacter(result)
+    } else {
+      window.alert('Json file does not contain a DnD character.')
+    }
+  }
+    catch {
+    window.alert('Json file does not contain a DnD character.')
+  }
 }
-}
-catch {
-window.alert('Json file does not contain a DnD character.')
-}
-}
-
 function clearCharacter() {
-updateCharacter({ })
+  updateCharacter({ })
 }
 //Functions dedicated to save and load character sheets from our DB. 
 function SaveAsNewCharacterSheet() {
@@ -173,27 +171,31 @@ function SaveAsNewCharacterSheet() {
     add({password:password, name:json.name, classLevel:json.classLevel, background:json.background, playerName:json.playerName, faction:json.faction, race:json.race, alignment:json.alignment, xp:json.xp, dciNo:json.dciNo, str:json.str, dex:json.dex, con:json.con, int:json.int, wis:json.wis, cha:json.cha, inspiration:json.inspiration, proficiencyBonus:json.proficiencyBonus, strSave:json.strSave, strSaveChecked:json.strSaveChecked, dexSave:json.dexSave, dexSaveChecked:json.dexSaveChecked, conSave:json.conSave, conSaveChecked:json.conSaveChecked, intSave:json.intSave, intSaveChecked:json.intSaveChecked, wisSave:json.wisSave, wisSaveChecked:json.wisSaveChecked, chaSave:json.chaSave, chaSaveChecked:json.chaSaveChecked, skillAcrobatics:json.skillAcrobatics, skillAcrobaticsChecked:json.skillAcrobaticsChecked, skillAnimalHandling:json.skillAnimalHandling, skillAnimalHandlingChecked:json.skillAnimalHandlingChecked, skillArcana:json.skillArcana, skillArcanaChecked:json.skillArcanaChecked, skillAthletics:json.skillAthletics, skillAthleticsChecked:json.skillAthleticsChecked, skillDeception:json.skillDeception, skillDeceptionChecked:json.skillDeceptionChecked, skillHistory:json.skillHistory, skillHistoryChecked:json.skillHistoryChecked, skillInsight:json.skillInsight, skillInsightChecked:json.skillInsightChecked, skillIntimidation:json.skillIntimidation, skillIntimidationChecked:json.skillIntimidationChecked, skillInvestigation:json.skillInvestigation, skillInvestigationChecked:json.skillInvestigationChecked, skillMedicine:json.skillMedicine, skillMedicineChecked:json.skillMedicineChecked, skillNature:json.skillNature, skillNatureChecked:json.skillNatureChecked, skillPerception:json.skillPerception, skillPerceptionChecked:json.skillPerceptionChecked, skillPerformance:json.skillPerformance, skillPerformanceChecked:json.skillPerformanceChecked, skillPersuasion:json.skillPersuasion, skillPersuasionChecked:json.skillPersuasionChecked, skillReligion:json.skillRegiligion, skillReligionChecked:json.skillReligionChecked, skillSlightOfHand:json.skillSlightofHand, skillSlightOfHandChecked:json.skillSlightOfHandChecked, skillStealth:json.skillStealth, skillStealthChecked:json.skillStealthChecked, skillSurvival:json.skillSurvival, skillSurvivalChecked:json.skillSurvivalChecked, passivePerception:json.passivePerception, otherProficiencies:json.otherProficiencies, ac:json.ac, init:json.init, speed:json.speed, maxHp:json.maxHp, hp:json.hp, tempHp:json.tempHp, hitDiceMax:json.hitDiceMax, hitDice:json.hitDice, deathsaveSuccesses:json.deathsaveSuccesses, deathsaveFailures:json.deathsaveFailures, attacks:json.attacks, attacksText:json.attacksText, cp:json.cp, sp:json.sp, ep:json.ep, gp:json.gp, pp:json.pp, equipment:json.equipment, equipment2:json.equipment2, personalityTraits:json.personalityTraits, ideals:json.ideals, bonds:json.bonds, flaws:json.flaws, featuresTraits:json.featuresTraits, age:json.age, height:json.height, weight:json.weight, eyes:json.eyes, skin:json.skin, hair:json.hair, appearance:json.appearance, backstory:json.backstory, factionImg:json.factionImg, factionRank:json.factionRank, allies:json.allies, allies2:json.allies2, additionalFeatures:json.additionalFeatures, additionalFeatures2:json.additionalFeatures2, totalNonConsumableMagicItems:json.totalNonConsumableMagicItems, treasure:json.treasure, treasure2:json.treasure2, spellcastingClass:json.spellcastingClass, preparedSpellsTotal:json.preparedSpellsTotal, spellSaveDC:json.spellSaveDC, spellAttackBonus:json.spellAttackBonus, cantrips:json.cantrips, lvl1SpellSlotsTotal:json.lvl1SpellSlotsTotal, lvl1SpellSlotsUsed:json.lvl1SpellSlotsUsed, lvl1Spells:json.lvl1Spells, lvl2SpellSlotsTotal:json.lvl2SpellSlotsTotal, lvl2SpellSlotsUsed:json.lvl2SpellSlotsUsed, lvl2Spells:json.lvl2Spells, lvl3SpellSlotsTotal:json.lvl3SpellSlotsTotal, lvl3SpellSlotsUsed:json.lvl3SpellSlotsUsed, lvl3Spells:json.lvl3Spells, lvl4SpellSlotsTotal:json.lvl4SpellSlotsTotal, lvl4SpellSlotsUsed:json.lvl4SpellSlotsUsed, lvl4Spells:json.lvl4Spells, lvl5SpellSlotsTotal:json.lvl5SpellSlotsTotal, lvl5SpellSlotsUsed:json.lvl5SpellSlotsUsed, lvl5Spells:json.lvl5Spells, lvl6SpellSlotsTotal:json.lvl6SpellSlotsTotal, lvl6SpellSlotsUsed:json.lvl6SpellSlotsUsed, lvl6Spells:json.lvl6Spells, lvl7SpellSlotsTotal:json.lvl7SpellSlotsTotal, lvl7SpellSlotsUsed:json.lvl7SpellSlotsUsed, lvl7Spells:json.lvl7Spells, lvl8SpellSlotsTotal:json.lvl8SpellSlotsTotal, lvl8SpellSlotsUsed:json.lvl8SpellSlotsUsed, lvl8Spells:json.lvl8Spells, lvl9SpellSlotsTotal:json.lvl9SpellSlotsTotal, lvl9SpellSlotsUsed:json.lvl9SpellSlotsUsed, lvl9Spells:json.lvl9Spells} 
           ).then(
       event => {
-        console.log('Added Character:', event.toString());
+        alert('Operation succesful: Created Character "'+json.name+'".');
+        clearCharacter();
       },
       error => {
         console.log(error);
+        alert('Error encountered: An unknown error occured while attempting to create your character.');
       }
     );
   };
   createChar();
-  (document.getElementById("currentSheet") as HTMLSelectElement).selectedIndex = (document.getElementById("currentSheet") as HTMLSelectElement).options.length;
-  alert('Operation succesful: Created Character "'+json.name+'"');
 }
 function LoadCharacterSheet(){
   const { getByID } = useIndexedDB('CharacterSheets');
   var id = parseInt((document.getElementById("currentSheet") as HTMLSelectElement).options[(document.getElementById("currentSheet") as HTMLSelectElement).selectedIndex].value);
-  if(isNaN(id))
-    setSelectedSheet(undefined);
+  if(isNaN(id)){
+      setSelectedSheet(undefined);
+      clearCharacter();
+      return;
+  }
   getByID(id).then(characterSheetPromise=>{
     setCharacter(characterSheetPromise);
-    setSelectedSheet(JSON.parse(JSON.stringify(characterSheetPromise, null, 2)));
+    if(characterSheetPromise!=undefined)
+      setSelectedSheet(characterSheetPromise);
+    loadCharacter(JSON.stringify(characterSheetPromise, null, 2));
   });
-  loadCharacter(JSON.stringify(character, null, 2));
 }
 //This anihilates the sheet database.
 function ClearAllSheets(){
@@ -208,17 +210,21 @@ function ClearAllSheets(){
 }
 //Deletes the given sheetKey from the DB
 function DeleteCharacterSheet(){
-  const { deleteRecord, clear} = useIndexedDB('CharacterSheets');
+  const { deleteRecord} = useIndexedDB('CharacterSheets');
   var id = (document.getElementById("currentSheet") as HTMLSelectElement).options[(document.getElementById("currentSheet") as HTMLSelectElement).selectedIndex].value;
   //We verify if the user knows the password to the selected sheet.
   if(CheckPassword() == false){
     return;
   }
-  deleteRecord(id);
-  clearCharacter();
-  setSelectedSheet(JSON.parse(JSON.stringify(character, null , 2)));
-  (document.getElementById("currentSheet") as HTMLSelectElement).selectedIndex = 0;
-  alert("Operation succesful: The sheet was deleted.");
+  const destroySheet = () => {
+    deleteRecord(selectedSheet.id).then(event => {
+      alert("Operation succesful: The sheet was deleted.");
+      clearCharacter();
+      setSelectedSheet(JSON.parse(JSON.stringify(character, null , 2)));
+      (document.getElementById("currentSheet") as HTMLSelectElement).selectedIndex = 0;
+    });
+  }
+  destroySheet();
 }
 //Updates the given sheet via sheetKey
 function UpdateCharacterSheet(){
@@ -230,7 +236,7 @@ function UpdateCharacterSheet(){
   }
   const json = JSON.parse(JSON.stringify(character, null, 2));
   const updateChar = () => {
-    update({id:tempId, name:json.name, classLevel:json.classLevel, background:json.background, playerName:json.playerName, faction:json.faction, race:json.race, alignment:json.alignment, xp:json.xp, dciNo:json.dciNo, str:json.str, dex:json.dex, con:json.con, int:json.int, wis:json.wis, cha:json.cha, inspiration:json.inspiration, proficiencyBonus:json.proficiencyBonus, strSave:json.strSave, strSaveChecked:json.strSaveChecked, dexSave:json.dexSave, dexSaveChecked:json.dexSaveChecked, conSave:json.conSave, conSaveChecked:json.conSaveChecked, intSave:json.intSave, intSaveChecked:json.intSaveChecked, wisSave:json.wisSave, wisSaveChecked:json.wisSaveChecked, chaSave:json.chaSave, chaSaveChecked:json.chaSaveChecked, skillAcrobatics:json.skillAcrobatics, skillAcrobaticsChecked:json.skillAcrobaticsChecked, skillAnimalHandling:json.skillAnimalHandling, skillAnimalHandlingChecked:json.skillAnimalHandlingChecked, skillArcana:json.skillArcana, skillArcanaChecked:json.skillArcanaChecked, skillAthletics:json.skillAthletics, skillAthleticsChecked:json.skillAthleticsChecked, skillDeception:json.skillDeception, skillDeceptionChecked:json.skillDeceptionChecked, skillHistory:json.skillHistory, skillHistoryChecked:json.skillHistoryChecked, skillInsight:json.skillInsight, skillInsightChecked:json.skillInsightChecked, skillIntimidation:json.skillIntimidation, skillIntimidationChecked:json.skillIntimidationChecked, skillInvestigation:json.skillInvestigation, skillInvestigationChecked:json.skillInvestigationChecked, skillMedicine:json.skillMedicine, skillMedicineChecked:json.skillMedicineChecked, skillNature:json.skillNature, skillNatureChecked:json.skillNatureChecked, skillPerception:json.skillPerception, skillPerceptionChecked:json.skillPerceptionChecked, skillPerformance:json.skillPerformance, skillPerformanceChecked:json.skillPerformanceChecked, skillPersuasion:json.skillPersuasion, skillPersuasionChecked:json.skillPersuasionChecked, skillReligion:json.skillRegiligion, skillReligionChecked:json.skillReligionChecked, skillSlightOfHand:json.skillSlightofHand, skillSlightOfHandChecked:json.skillSlightOfHandChecked, skillStealth:json.skillStealth, skillStealthChecked:json.skillStealthChecked, skillSurvival:json.skillSurvival, skillSurvivalChecked:json.skillSurvivalChecked, passivePerception:json.passivePerception, otherProficiencies:json.otherProficiencies, ac:json.ac, init:json.init, speed:json.speed, maxHp:json.maxHp, hp:json.hp, tempHp:json.tempHp, hitDiceMax:json.hitDiceMax, hitDice:json.hitDice, deathsaveSuccesses:json.deathsaveSuccesses, deathsaveFailures:json.deathsaveFailures, attacks:json.attacks, attacksText:json.attacksText, cp:json.cp, sp:json.sp, ep:json.ep, gp:json.gp, pp:json.pp, equipment:json.equipment, equipment2:json.equipment2, personalityTraits:json.personalityTraits, ideals:json.ideals, bonds:json.bonds, flaws:json.flaws, featuresTraits:json.featuresTraits, age:json.age, height:json.height, weight:json.weight, eyes:json.eyes, skin:json.skin, hair:json.hair, appearance:json.appearance, backstory:json.backstory, factionImg:json.factionImg, factionRank:json.factionRank, allies:json.allies, allies2:json.allies2, additionalFeatures:json.additionalFeatures, additionalFeatures2:json.additionalFeatures2, totalNonConsumableMagicItems:json.totalNonConsumableMagicItems, treasure:json.treasure, treasure2:json.treasure2, spellcastingClass:json.spellcastingClass, preparedSpellsTotal:json.preparedSpellsTotal, spellSaveDC:json.spellSaveDC, spellAttackBonus:json.spellAttackBonus, cantrips:json.cantrips, lvl1SpellSlotsTotal:json.lvl1SpellSlotsTotal, lvl1SpellSlotsUsed:json.lvl1SpellSlotsUsed, lvl1Spells:json.lvl1Spells, lvl2SpellSlotsTotal:json.lvl2SpellSlotsTotal, lvl2SpellSlotsUsed:json.lvl2SpellSlotsUsed, lvl2Spells:json.lvl2Spells, lvl3SpellSlotsTotal:json.lvl3SpellSlotsTotal, lvl3SpellSlotsUsed:json.lvl3SpellSlotsUsed, lvl3Spells:json.lvl3Spells, lvl4SpellSlotsTotal:json.lvl4SpellSlotsTotal, lvl4SpellSlotsUsed:json.lvl4SpellSlotsUsed, lvl4Spells:json.lvl4Spells, lvl5SpellSlotsTotal:json.lvl5SpellSlotsTotal, lvl5SpellSlotsUsed:json.lvl5SpellSlotsUsed, lvl5Spells:json.lvl5Spells, lvl6SpellSlotsTotal:json.lvl6SpellSlotsTotal, lvl6SpellSlotsUsed:json.lvl6SpellSlotsUsed, lvl6Spells:json.lvl6Spells, lvl7SpellSlotsTotal:json.lvl7SpellSlotsTotal, lvl7SpellSlotsUsed:json.lvl7SpellSlotsUsed, lvl7Spells:json.lvl7Spells, lvl8SpellSlotsTotal:json.lvl8SpellSlotsTotal, lvl8SpellSlotsUsed:json.lvl8SpellSlotsUsed, lvl8Spells:json.lvl8Spells, lvl9SpellSlotsTotal:json.lvl9SpellSlotsTotal, lvl9SpellSlotsUsed:json.lvl9SpellSlotsUsed, lvl9Spells:json.lvl9Spells}
+    update({id:selectedSheet.id ,password:selectedSheet.password, name:json.name, classLevel:json.classLevel, background:json.background, playerName:json.playerName, faction:json.faction, race:json.race, alignment:json.alignment, xp:json.xp, dciNo:json.dciNo, str:json.str, dex:json.dex, con:json.con, int:json.int, wis:json.wis, cha:json.cha, inspiration:json.inspiration, proficiencyBonus:json.proficiencyBonus, strSave:json.strSave, strSaveChecked:json.strSaveChecked, dexSave:json.dexSave, dexSaveChecked:json.dexSaveChecked, conSave:json.conSave, conSaveChecked:json.conSaveChecked, intSave:json.intSave, intSaveChecked:json.intSaveChecked, wisSave:json.wisSave, wisSaveChecked:json.wisSaveChecked, chaSave:json.chaSave, chaSaveChecked:json.chaSaveChecked, skillAcrobatics:json.skillAcrobatics, skillAcrobaticsChecked:json.skillAcrobaticsChecked, skillAnimalHandling:json.skillAnimalHandling, skillAnimalHandlingChecked:json.skillAnimalHandlingChecked, skillArcana:json.skillArcana, skillArcanaChecked:json.skillArcanaChecked, skillAthletics:json.skillAthletics, skillAthleticsChecked:json.skillAthleticsChecked, skillDeception:json.skillDeception, skillDeceptionChecked:json.skillDeceptionChecked, skillHistory:json.skillHistory, skillHistoryChecked:json.skillHistoryChecked, skillInsight:json.skillInsight, skillInsightChecked:json.skillInsightChecked, skillIntimidation:json.skillIntimidation, skillIntimidationChecked:json.skillIntimidationChecked, skillInvestigation:json.skillInvestigation, skillInvestigationChecked:json.skillInvestigationChecked, skillMedicine:json.skillMedicine, skillMedicineChecked:json.skillMedicineChecked, skillNature:json.skillNature, skillNatureChecked:json.skillNatureChecked, skillPerception:json.skillPerception, skillPerceptionChecked:json.skillPerceptionChecked, skillPerformance:json.skillPerformance, skillPerformanceChecked:json.skillPerformanceChecked, skillPersuasion:json.skillPersuasion, skillPersuasionChecked:json.skillPersuasionChecked, skillReligion:json.skillRegiligion, skillReligionChecked:json.skillReligionChecked, skillSlightOfHand:json.skillSlightofHand, skillSlightOfHandChecked:json.skillSlightOfHandChecked, skillStealth:json.skillStealth, skillStealthChecked:json.skillStealthChecked, skillSurvival:json.skillSurvival, skillSurvivalChecked:json.skillSurvivalChecked, passivePerception:json.passivePerception, otherProficiencies:json.otherProficiencies, ac:json.ac, init:json.init, speed:json.speed, maxHp:json.maxHp, hp:json.hp, tempHp:json.tempHp, hitDiceMax:json.hitDiceMax, hitDice:json.hitDice, deathsaveSuccesses:json.deathsaveSuccesses, deathsaveFailures:json.deathsaveFailures, attacks:json.attacks, attacksText:json.attacksText, cp:json.cp, sp:json.sp, ep:json.ep, gp:json.gp, pp:json.pp, equipment:json.equipment, equipment2:json.equipment2, personalityTraits:json.personalityTraits, ideals:json.ideals, bonds:json.bonds, flaws:json.flaws, featuresTraits:json.featuresTraits, age:json.age, height:json.height, weight:json.weight, eyes:json.eyes, skin:json.skin, hair:json.hair, appearance:json.appearance, backstory:json.backstory, factionImg:json.factionImg, factionRank:json.factionRank, allies:json.allies, allies2:json.allies2, additionalFeatures:json.additionalFeatures, additionalFeatures2:json.additionalFeatures2, totalNonConsumableMagicItems:json.totalNonConsumableMagicItems, treasure:json.treasure, treasure2:json.treasure2, spellcastingClass:json.spellcastingClass, preparedSpellsTotal:json.preparedSpellsTotal, spellSaveDC:json.spellSaveDC, spellAttackBonus:json.spellAttackBonus, cantrips:json.cantrips, lvl1SpellSlotsTotal:json.lvl1SpellSlotsTotal, lvl1SpellSlotsUsed:json.lvl1SpellSlotsUsed, lvl1Spells:json.lvl1Spells, lvl2SpellSlotsTotal:json.lvl2SpellSlotsTotal, lvl2SpellSlotsUsed:json.lvl2SpellSlotsUsed, lvl2Spells:json.lvl2Spells, lvl3SpellSlotsTotal:json.lvl3SpellSlotsTotal, lvl3SpellSlotsUsed:json.lvl3SpellSlotsUsed, lvl3Spells:json.lvl3Spells, lvl4SpellSlotsTotal:json.lvl4SpellSlotsTotal, lvl4SpellSlotsUsed:json.lvl4SpellSlotsUsed, lvl4Spells:json.lvl4Spells, lvl5SpellSlotsTotal:json.lvl5SpellSlotsTotal, lvl5SpellSlotsUsed:json.lvl5SpellSlotsUsed, lvl5Spells:json.lvl5Spells, lvl6SpellSlotsTotal:json.lvl6SpellSlotsTotal, lvl6SpellSlotsUsed:json.lvl6SpellSlotsUsed, lvl6Spells:json.lvl6Spells, lvl7SpellSlotsTotal:json.lvl7SpellSlotsTotal, lvl7SpellSlotsUsed:json.lvl7SpellSlotsUsed, lvl7Spells:json.lvl7Spells, lvl8SpellSlotsTotal:json.lvl8SpellSlotsTotal, lvl8SpellSlotsUsed:json.lvl8SpellSlotsUsed, lvl8Spells:json.lvl8Spells, lvl9SpellSlotsTotal:json.lvl9SpellSlotsTotal, lvl9SpellSlotsUsed:json.lvl9SpellSlotsUsed, lvl9Spells:json.lvl9Spells}
       ).then(event => {
       alert('Operation succesful: Your sheet was updated, ' + json.playerName + '.');
     },
@@ -253,7 +259,6 @@ function registerPassword(){
 function CheckPassword() : boolean{
   if(selectedSheet == null || selectedSheet == undefined){
     return false;
-    
   }
   var temp = requestPassword();
   if(temp!=null && (selectedSheet.password) == temp){
@@ -273,9 +278,9 @@ function ConstructList(){
     return null;
   var sheet = JSON.parse(JSON.stringify(sheetList));
   var options = Array<JSX.Element>(sheet+1);
-  options[0] = <option value={undefined} onSelect={() => loadDefaultCharacter()}>NO SHEET SELECTED</option>;
+  options[0] = <option key={0} value={undefined} onSelect={() => loadDefaultCharacter()}>NO SHEET SELECTED</option>;
   for(var i=0; i<sheet.length; i++){
-    options[i+1] = <option value={sheet[i].id}>{sheet[i].name} | created by {sheet[i].playerName}</option>;
+    options[i+1] = <option key={sheet[i].id} value={sheet[i].id}>{sheet[i].name} | created by {sheet[i].playerName}</option>;
   }
   return options;
 }
@@ -314,7 +319,7 @@ return (
             <li className='nav-item mr-lg-3'>
 
                 <label htmlFor='currentSheet' className='text-white'>Selected Character Sheet:</label>
-                <select className="btn-dark ml-2 form-select form-select-lg" name="currentSheet" id="currentSheet" aria-label="Select Sheet" onChange={() => LoadCharacterSheet()}>
+                <select className="btn-dark ml-2 form-select form-select-lg" name="currentSheet" id="currentSheet" onChange={() => LoadCharacterSheet()}>
                   {
                     ConstructList()
                   }
