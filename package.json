@@ -2,26 +2,20 @@
   "name": "dnd-character-sheets",
   "version": "1.1.0",
   "private": true,
-  "homepage": "https://so-lg.github.io/",
+  "homepage": "https://uinderal.com/",
   "dependencies": {
     "-": "^0.0.1",
     "@testing-library/jest-dom": "^5.16.4",
-    "@testing-library/react": "^13.3.0",
-    "@testing-library/user-event": "^13.5.0",
-    "@types/jest": "^27.5.2",
-    "@types/node": "^16.11.41",
-    "@types/react": "^18.0.14",
-    "@types/react-dom": "^18.0.5",
+    "@types/react-router-dom": "^5.3.3",
     "axios": "^0.27.2",
-    "dnd-character-sheets": "^1.0.3",
+    "babel-plugin-macros": "^3.1.0",
     "gh-pages": "^4.0.0",
-    "qs": "^6.10.5",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "qs": "^6.11.0",
+    "react": "^16.14.0",
+    "react-dom": "^16.14.0",
     "react-router-dom": "^5.1.0",
-    "react-scripts": "5.0.1",
+    "react-scripts": "^5.0.1",
     "save-dev": "^0.0.1-security",
-    "typescript": "^4.7.4",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
@@ -51,6 +45,14 @@
     ]
   },
   "devDependencies": {
-    "@types/react-router-dom": "^5.3.3"
+    "@types/jest": "^28.1.4",
+    "@types/node": "^18.0.1",
+    "@types/qs": "^6.9.7",
+    "@types/react": "^18.0.14",
+    "@types/react-dom": "^18.0.5",
+    "@types/react-router-dom": "^5.3.3",
+    "dnd-character-sheets": "^1.0.3",
+    "react-indexed-db": "^1.0.12",
+    "typescript": "^4.7.4"
   }
 }
