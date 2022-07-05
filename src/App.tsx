@@ -315,7 +315,7 @@ return (
                 <Link className={props.location.pathname === '/all' ? 'nav-link active' : 'nav-link'} to='/all'>All</Link>
             </li>
         </ul>
-        <ul className='navbar-nav ml-auto mr-lg-5' data-toggle='collapse' data-target='.navbar-collapse.show'>
+        <ul className='navbar-nav ml-auto mr-lg-5' data-target='.navbar-collapse.show'>
             <li className='nav-item mr-lg-3'>
 
                 <label htmlFor='currentSheet' className='text-white'>Selected Character Sheet:</label>
