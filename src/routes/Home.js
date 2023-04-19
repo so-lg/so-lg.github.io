@@ -7,8 +7,8 @@ function Home() {
                 <div class="d-flex justify-content-center">
                     <div class="text-center">
                         <h1 class="mx-auto my-0 text-uppercase">Uinderal</h1>
-                        <h2 class="text-white-50 mx-auto mt-2 mb-5">Discover the limitless magical dimensions from a world born from chaos.</h2>
-                        <Link class="btn btn-danger" to="Wiki">Enter the Universe</Link>
+                        <h2 class="mx-auto mt-2 mb-5">Discover the limitless magical dimensions from a world born from chaos.</h2>
+                        <Link class="btn btn-danger" to="Wiki" style={{backgroundColor:"#BF0000"}}>Enter the Universe</Link>
                     </div>
                 </div>
             </div>
