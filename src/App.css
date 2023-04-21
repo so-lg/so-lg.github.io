@@ -58,3 +58,12 @@ body {
   background-color: #0A0A0A !important;
   color: #FBFBFB !important;
 }
+
+.wiki-link {
+  text-decoration: none;
+  color: #0A0A0A;
+}
+.wiki-link:hover {
+  text-decoration: none;
+  color: #FF0000;
+}
