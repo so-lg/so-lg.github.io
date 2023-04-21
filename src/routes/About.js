@@ -9,7 +9,7 @@ function About() {
                     <div class="col-lg-8">
                         <h2 class="text-white mb-4">A Humble Start and A Long Journey</h2>
                         <p class="">
-                            The birth of Uinderal's ancestor was in 2018, when BobCalvery began to write a story about a character named "Prometheus". Years later, the creation of this character would lead to the creation of multiple universes and draw other contributors to its ongoing story, becoming what is now known today as the Universe of Uinderal.                         </p>
+                            The birth of Uinderal was in 2018, when BobCalvery, its creator, began to write a story about a character named "Prometheus". Years later, the creation of this character would lead to the creation of multiple universes and draw other contributors to its ongoing story, becoming what is now known today as the Universe of Uinderal.                         </p>
                     </div>
                 </div>
                 <img class="img-fluid mb-5" src={HeaderImage} alt="Universe of Uinderal's Logo" width={650}/>
