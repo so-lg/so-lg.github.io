@@ -1,0 +1,36 @@
+{
+    "Categories":[
+        {
+            "Name":"The Beginning",
+            "Route":"UniverseOrigin"
+        },
+        {
+            "Name":"Dimensions and Locations",
+            "Route":"UniverseDimensions"
+        },
+        {
+            "Name":"Planes of Existence",
+            "Route":"UniversePlanes"
+        },
+        {
+            "Name":"Energies and Items of Uinderal",
+            "Route":"UinderalEnergiesItems"
+        },
+        {
+            "Name":"Characters and Factions of Uinderal",
+            "Route":"UinderalCharactersFactions"
+        },
+        {
+            "Name":"Creatures, Races and Entities",
+            "Route":"UinderalCreaturesRacesEntities"
+        },
+        {
+            "Name":"D&D Character Creation",
+            "Route":"DnDCharacterCreation"
+        },
+        {
+            "Name":"History of the Universe",
+            "Route":"UniverseHistory"
+        }
+    ]
+}
